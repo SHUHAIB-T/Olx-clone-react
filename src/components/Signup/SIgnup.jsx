@@ -1,7 +1,9 @@
-import { useForm } from "react-hook-form";
-
 import Logo from "../../../public/images/olx-logo.png";
 import "./Signup.css";
+
+import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { FirebaseContext } from "../../store/FirebaseContext";
 
 export default function Signup() {
   const {
@@ -9,7 +11,9 @@ export default function Signup() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const firebase = useContext(FirebaseContext);
   const onSubmit = (data) => console.log(data);
+
   return (
     <div>
       <div className="signupParentDiv">

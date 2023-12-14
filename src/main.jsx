@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { FirebaseContext } from "./store/FirebaseContext.js";
-import firebase from "./firebase/config.js";
+import { firebase } from "./firebase/config.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

@@ -2,17 +2,37 @@ import Logo from "../../../public/images/olx-logo.png";
 import "./Signup.css";
 
 import { useForm } from "react-hook-form";
-import { useContext } from "react";
-import { FirebaseContext } from "../../store/FirebaseContext";
+import { firestore, auth } from "../../firebase/config";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const firebase = useContext(FirebaseContext);
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = (data) => {
+    const { phone, name, email, password } = data;
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (result) => {
+        await updateProfile(auth.currentUser, { displayName: name });
+        addDoc(collection(firestore, "users"), {
+          id: result.user.uid,
+          name: name,
+          phone: phone,
+        }).then(() => {
+          navigate("/login");
+        });
+      })
+      .catch((err) => {
+        console.log("error");
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -26,7 +46,7 @@ export default function Signup() {
             type="text"
             id="fname"
             {...register("name", { required: "this field is required" })}
-            defaultValue="John"
+            defaultValue=""
           />
           <p className="error-message">{errors.name?.message}</p>
           <br />
@@ -41,7 +61,7 @@ export default function Signup() {
                 message: "enter a valid email",
               },
             })}
-            defaultValue="John"
+            defaultValue=""
           />
           <p className="error-message">{errors.email?.message}</p>
           <br />
@@ -82,7 +102,7 @@ export default function Signup() {
           <br />
           <button>Signup</button>
         </form>
-        <a>Login</a>
+        <Link to={"/login"}>Login</Link>
       </div>
     </div>
   );

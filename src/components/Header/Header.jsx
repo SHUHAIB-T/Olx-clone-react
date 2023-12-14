@@ -5,7 +5,30 @@ import Arrow from "../../assets/Arrow";
 import SellButton from "../../assets/SellButton";
 import SellButtonPlus from "../../assets/SellButtonPlus";
 import { Link } from "react-router-dom";
+import Usercard from "../Usercard/Usercard.jsx";
+
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useContext, useEffect } from "react";
+import { AuthContext, FirebaseContext } from "../../store/FirebaseContext";
+
 function Header() {
+  const { auth } = useContext(FirebaseContext);
+  const { user, setUser } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        setUser(null);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+  });
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -33,7 +56,11 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <Link to={"/login"}>Login</Link>
+          {user ? (
+            <Usercard user={user} logout={handleLogout} />
+          ) : (
+            <Link to={"/login"}>Login</Link>
+          )}
           <hr />
         </div>
 

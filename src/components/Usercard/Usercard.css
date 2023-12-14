@@ -1,0 +1,45 @@
+.user--prof,
+.profile-img {
+  width: 30px;
+  cursor: pointer;
+}
+.user-card-wrapper {
+  position: absolute;
+  top: 2px;
+  background-color: aliceblue;
+}
+.user-profile {
+  background-color: white;
+  position: absolute;
+  right: 50px;
+  padding: 5px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  min-width: max-content;
+}
+.user-profile ul li {
+  list-style: none;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+.user_details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+ul .view-and-edit-profile {
+  background-color: black;
+  width: 100%;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  /* border: 2px solid black; */
+}
+ul .view-and-edit-profile:hover {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  border: solid black;
+}
+.user-profile ul li:hover {
+  background-color: rgba(147, 225, 241, 0.365);
+}

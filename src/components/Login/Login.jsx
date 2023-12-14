@@ -1,22 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../../public/images/olx-logo.png";
 import "./Login.css";
 import { useForm } from "react-hook-form";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { FirebaseContext } from "../../store/FirebaseContext";
+import { useContext } from "react";
 
 function Login() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const { auth } = useContext(FirebaseContext);
   const submit = (data) => {
     const { email, password } = data;
-    console.log(data);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCridential) => {
+        console.log(userCridential);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error.message);
+      });
   };
 
   return (
-    <div>
+    <>
       <div className="loginParentDiv">
         <img width="200px" height="200px" src={Logo}></img>
         <form onSubmit={handleSubmit(submit)}>
@@ -53,7 +65,7 @@ function Login() {
         </form>
         <Link to={"/signup"}>Signup</Link>
       </div>
-    </div>
+    </>
   );
 }
 

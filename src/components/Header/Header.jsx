@@ -4,7 +4,7 @@ import Search from "../../assets/Search";
 import Arrow from "../../assets/Arrow";
 import SellButton from "../../assets/SellButton";
 import SellButtonPlus from "../../assets/SellButtonPlus";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Usercard from "../Usercard/Usercard.jsx";
 
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -14,6 +14,7 @@ import { AuthContext, FirebaseContext } from "../../store/FirebaseContext";
 function Header() {
   const { auth } = useContext(FirebaseContext);
   const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     signOut(auth)
@@ -33,12 +34,12 @@ function Header() {
     <div className="headerParentDiv">
       <div className="headerChildDiv">
         <div className="brandName">
-          <OlxLogo></OlxLogo>
+          <OlxLogo />
         </div>
         <div className="placeSearch">
-          <Search></Search>
+          <Search />
           <input type="text" />
-          <Arrow></Arrow>
+          <Arrow />
         </div>
         <div className="productSearch">
           <div className="input">
@@ -53,7 +54,7 @@ function Header() {
         </div>
         <div className="language">
           <span> ENGLISH </span>
-          <Arrow></Arrow>
+          <Arrow />
         </div>
         <div className="loginPage">
           {user ? (
@@ -68,7 +69,7 @@ function Header() {
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
+            <span onClick={() => navigate("/create")}>SELL</span>
           </div>
         </div>
       </div>

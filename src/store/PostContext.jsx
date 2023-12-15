@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 export const postContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export default function Post({ children }) {
   const [postDetails, setPostDetails] = useState();
   return (

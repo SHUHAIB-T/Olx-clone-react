@@ -10,7 +10,6 @@ function View() {
   const { firestore } = useContext(FirebaseContext);
 
   useEffect(() => {
-    console.log(postDetails.userId);
     const Ref = collection(firestore, "users");
     const qry = query(Ref, where("id", "==", `${postDetails.userId}`));
     getDocs(qry).then((snap) => {
@@ -18,7 +17,7 @@ function View() {
         setUserDetails({ ...data.data() });
       });
     });
-  }, []);
+  },[]);
 
   return (
     <div className="viewParentDiv">
